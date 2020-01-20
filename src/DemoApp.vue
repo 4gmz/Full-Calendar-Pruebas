@@ -45,12 +45,13 @@ export default {
         timeGridPlugin,
         interactionPlugin // needed for dateClick
       ],
-      calendarWeekends: true,
+      calendarWeekends: false,
       calendarEvents: [
         // initial event data
         {
           title: "Event Now",
-          start: new Date()
+          start: new Date(),
+          url: "https://fullcalendar.io/docs/event-object"
         }
       ]
     };
