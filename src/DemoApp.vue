@@ -3,7 +3,7 @@
     <FullCalendar
       class="demo-app-calendar"
       ref="fullCalendar"
-      defaultView="dayGridMonth"
+      defaultView="timeGridWeek"
       :header="{
         left: 'prev,next today',
         center: 'title',
@@ -12,6 +12,7 @@
       :views="views"
       :plugins="calendarPlugins"
       selectable="selectable"
+      :allDaySlot="false"
       :weekends="calendarWeekends"
       :events="calendarEvents"
       @select="handleSelect"
