@@ -50,30 +50,27 @@ export default {
       calendarEvents: [{ title: "Event Now", start: new Date() }]
     };
   },
-  created: function() {
-    // let me = this;
-    // me.config = {
-    //   calendarWeekends: false,
-    //   allDaySlot: false,
-    //   editable: false,
-    //   selectable: true,
-    //   selectHelper: true,
-    //   eventClick: function(calEvent, jsEvent, view) {
-    //     alert("hola mundo");
-    //   }
-    //   // @dateClick="handleDateClick"
-    // };
-  },
   methods: {
     handleDateClick(arg) {
       // console.log("arg.date", arg);
-      console.log("el star:", moment(arg.dateStr).add(30, "minutes"));
+      let inicio = moment(arg.date).format("YYYY-MM-DD H:mm:ss a");
+      let fin = moment(arg.date)
+        .add(45, "minutes")
+        .format("YYYY-MM-DD H:mm:ss a");
+      console.log(
+        "hora fin",
+        moment(fin)
+          .add(45, "minutes")
+          .format("YYYY-MM-DD H:mm:ss a"),
+        "hora de inicio:",
+        moment(arg.date).format("YYYY-MM-DD H:mm:ss a")
+      );
       if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
         this.calendarEvents.push({
           // add new event data
           title: "New Event",
           start: arg.date,
-          end: arg.date,
+          end: moment(arg.date).add(45, "minutes"),
           id: 1,
           color: "blue",
           groupId: 1
