@@ -9,6 +9,7 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       }"
+      :views="views"
       :plugins="calendarPlugins"
       selectable="selectable"
       :weekends="calendarWeekends"
@@ -41,6 +42,11 @@ export default {
       calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       selectable: true,
       calendarWeekends: false,
+      views: {
+        dayGrid: {
+          eventLimit: 4 // adjust to 6 only for timeGridWeek/timeGridDay
+        }
+      },
       calendarEvents: [{ title: "Event Now", start: new Date() }]
     };
   },
