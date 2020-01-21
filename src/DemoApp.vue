@@ -1,26 +1,21 @@
 <template>
   <div class="demo-app">
-    <!-- <FullCalendar
-      class="demo-app-calendar"
-      ref="fullCalendar"
-      defaultView="timeGridWeek"
-      :header="header"
-      :plugins="calendarPlugins"
-      :weekends="calendarWeekends"
-      :events="calendarEvents"
-      locale="es"
-      @dateClick="handleDateClick"
-    />-->
-    <!-- copia -->
     <FullCalendar
       class="demo-app-calendar"
       ref="fullCalendar"
-      :config="config"
+      defaultView="dayGridMonth"
+      :header="{
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      }"
       :plugins="calendarPlugins"
-      :header="header"
+      selectable="selectable"
+      :weekends="calendarWeekends"
       :events="calendarEvents"
-      locale="es"
+      @select="handleSelect"
       @dateClick="handleDateClick"
+      @eventClick="handleClick"
     />
   </div>
 </template>
@@ -42,37 +37,29 @@ export default {
   },
   data: function() {
     return {
-      config: {},
       calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      header: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
-      },
-      defaultView: "timeGridWeek",
-      calendarEvents: [
-        {
-          title: "Event Now",
-          start: new Date()
-        }
-      ]
+      selectable: true,
+      calendarWeekends: false,
+      calendarEvents: [{ title: "Event Now", start: new Date() }]
     };
   },
   created: function() {
-    let me = this;
-    me.config = {
-      calendarWeekends: false,
-
-      eventClick: function(calEvent, jsEvent, view) {
-        alert("hola mundo");
-      }
-      // @dateClick="handleDateClick"
-    };
+    // let me = this;
+    // me.config = {
+    //   calendarWeekends: false,
+    //   allDaySlot: false,
+    //   editable: false,
+    //   selectable: true,
+    //   selectHelper: true,
+    //   eventClick: function(calEvent, jsEvent, view) {
+    //     alert("hola mundo");
+    //   }
+    //   // @dateClick="handleDateClick"
+    // };
   },
   methods: {
     handleDateClick(arg) {
       console.log("arg.date", arg.date);
-
       if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
         this.calendarEvents.push({
           // add new event data
@@ -81,6 +68,13 @@ export default {
           allDay: arg.allDay
         });
       }
+    },
+    handleSelect(e) {
+      // console.log("el select event ", e);
+    },
+    handleClick(info) {
+      var eventObj = info.event;
+      console.log("info: ", eventObj.title);
     }
   }
 };
