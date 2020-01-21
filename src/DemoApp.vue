@@ -1,22 +1,25 @@
 <template>
   <div class="demo-app">
-    <div class="demo-app-top">
-      <button @click="toggleWeekends">toggle weekends</button>
-      <button @click="gotoPast">go to a date in the past</button>
-      (also, click a date/time to add an event)
-    </div>
-    <FullCalendar
+    <!-- <FullCalendar
       class="demo-app-calendar"
       ref="fullCalendar"
       defaultView="timeGridWeek"
-      :header="{
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      }"
+      :header="header"
       :plugins="calendarPlugins"
       :weekends="calendarWeekends"
       :events="calendarEvents"
+      locale="es"
+      @dateClick="handleDateClick"
+    />-->
+    <!-- copia -->
+    <FullCalendar
+      class="demo-app-calendar"
+      ref="fullCalendar"
+      :config="config"
+      :plugins="calendarPlugins"
+      :header="header"
+      :events="calendarEvents"
+      locale="es"
       @dateClick="handleDateClick"
     />
   </div>
@@ -39,31 +42,34 @@ export default {
   },
   data: function() {
     return {
-      calendarPlugins: [
-        // plugins must be defined in the JS
-        dayGridPlugin,
-        timeGridPlugin,
-        interactionPlugin // needed for dateClick
-      ],
-      calendarWeekends: false,
+      config: {},
+      calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+      header: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+      },
+      defaultView: "timeGridWeek",
       calendarEvents: [
-        // initial event data
         {
           title: "Event Now",
-          start: new Date(),
-          url: "https://fullcalendar.io/docs/event-object"
+          start: new Date()
         }
       ]
     };
   },
+  created: function() {
+    let me = this;
+    me.config = {
+      calendarWeekends: false,
+
+      eventClick: function(calEvent, jsEvent, view) {
+        alert("hola mundo");
+      }
+      // @dateClick="handleDateClick"
+    };
+  },
   methods: {
-    toggleWeekends() {
-      this.calendarWeekends = !this.calendarWeekends; // update a property
-    },
-    gotoPast() {
-      let calendarApi = this.$refs.fullCalendar.getApi(); // from the ref="..."
-      calendarApi.gotoDate("2000-01-01"); // call a method on the Calendar object
-    },
     handleDateClick(arg) {
       console.log("arg.date", arg.date);
 
