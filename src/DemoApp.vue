@@ -42,7 +42,7 @@ export default {
     return {
       calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       selectable: true,
-      calendarWeekends: false,
+      calendarWeekends: true,
       views: {
         dayGrid: {
           eventLimit: 4 // adjust to 6 only for timeGridWeek/timeGridDay
