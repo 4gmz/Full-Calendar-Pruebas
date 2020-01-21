@@ -25,6 +25,7 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import moment from "moment";
 
 // must manually include stylesheets for each plugin
 import "@fullcalendar/core/main.css";
@@ -59,13 +60,17 @@ export default {
   },
   methods: {
     handleDateClick(arg) {
-      console.log("arg.date", arg.date);
+      // console.log("arg.date", arg);
+      console.log("el star:", moment(arg.dateStr).add(30, "minutes"));
       if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
         this.calendarEvents.push({
           // add new event data
           title: "New Event",
           start: arg.date,
-          allDay: arg.allDay
+          end: arg.date,
+          id: 1,
+          color: "blue",
+          groupId: 1
         });
       }
     },
