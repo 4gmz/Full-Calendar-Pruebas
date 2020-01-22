@@ -84,6 +84,13 @@ export default {
     handleClick(info) {
       var eventObj = info.event;
       console.log("info: ", eventObj.title);
+    },
+    handleDate(semana) {
+      // permite moverse entre semanas del calendario. semana
+      let fecha = moment(moment().week(semana))
+        .startOf("week")
+        .format("YYYY-MM-DD HH:mm:ss");
+      this.$refs.calendar.getApi().gotoDate(fecha);
     }
   }
 };
