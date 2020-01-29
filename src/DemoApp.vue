@@ -80,8 +80,10 @@ export default {
         this.calendarEvents.push({
           // add new event data
           title: "New Event",
-          start: arg.date,
-          end: moment(arg.date).add(45, "minutes"),
+          start: moment(arg.date).format("YYYY-MM-DDTHH:mm:ssZ"),
+          end: moment(arg.date)
+            .add(45, "minutes")
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
           id: 1,
           color: "blue",
           groupId: 1
