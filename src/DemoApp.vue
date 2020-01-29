@@ -1,19 +1,24 @@
 <template>
   <div class="demo-app">
+    <div class="row my-4">
+      <button class="btn btn-danger my-2" @click="handleButtonClick">Boton de conole</button>
+    </div>
     <FullCalendar
       class="demo-app-calendar"
       ref="fullCalendar"
+      locale="es"
       defaultView="timeGridWeek"
-      :header="{
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      }"
+      :header="{ left: 'prev,next today',center: 'title',right:'dayGridMonth, timeGridWeek, timeGridDay, listWeek' }"
+      :button-text="{ today:'Hoy', month:'Mes', week: 'Semana', day:'Día', list: 'Lista' } "
       :views="views"
       :plugins="calendarPlugins"
-      selectable="selectable"
-      :allDaySlot="false"
-      :weekends="calendarWeekends"
+      :selectable="true"
+      :allDaySlot="true"
+      :weekends="true"
+      :firstDay="1"
+      allDayText="todo el día"
+      min-time="08:00:00"
+      max-time="18:00:00"
       :events="calendarEvents"
       @select="handleSelect"
       @dateClick="handleDateClick"
@@ -27,27 +32,32 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { Calendar } from "@fullcalendar/core";
+import listPlugin from "@fullcalendar/list";
+
 import moment from "moment";
 
 // must manually include stylesheets for each plugin
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
+import "@fullcalendar/list/main.css";
 
 export default {
   components: {
-    FullCalendar // make the <FullCalendar> tag available
+    FullCalendar
   },
   data: function() {
     return {
-      calendarPlugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
-      selectable: true,
-      calendarWeekends: true,
-      views: {
-        dayGrid: {
-          eventLimit: 4 // adjust to 6 only for timeGridWeek/timeGridDay
-        }
-      },
+      calendarPlugins: [
+        dayGridPlugin,
+        timeGridPlugin,
+        interactionPlugin,
+        listPlugin
+      ],
+      // selectable: true,
+      // calendarWeekends: true,
+      views: { dayGrid: { eventLimit: 4 } },
       calendarEvents: [{ title: "Event Now", start: new Date() }]
     };
   },
@@ -91,6 +101,10 @@ export default {
         .startOf("week")
         .format("YYYY-MM-DD HH:mm:ss");
       this.$refs.calendar.getApi().gotoDate(fecha);
+    },
+    handleButtonClick() {
+      let calendarApi = this.$refs.fullCalendar;
+      console.log("calendar", calendarApi);
     }
   }
 };
