@@ -76,7 +76,7 @@ export default {
         "hora de inicio:",
         moment(arg.date).format("YYYY-MM-DD H:mm:ss a")
       );
-      if (confirm("Would you like to add an event to " + arg.dateStr + " ?")) {
+      if (confirm("¿Desea agregar un evento a " + arg.dateStr + " ?")) {
         this.calendarEvents.push({
           // add new event data
           title: "New Event",
